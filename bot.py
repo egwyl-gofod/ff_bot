@@ -1,7 +1,6 @@
 import os
 import telebot
 import datetime
-import pytz
 import json
 import traceback
 import schedule
