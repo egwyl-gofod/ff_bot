@@ -29,10 +29,12 @@ class fanfic(object):
         return parts
     
     def is_updated(self):
-        if self.stop != self.check_parts():
-            return True
-        return False
+        if self.stop == self.check_parts():
+            return False
+        return True
 
 
 osen = fanfic('Осень на двоих 6', 'https://fanfics.me/fic131932', 8)
 fics.append(osen)
+
+
