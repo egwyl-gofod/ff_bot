@@ -33,7 +33,7 @@ class P_schedule(): # Class для работы с schedule
             time.sleep(1)
  
     ####Функции для выполнения заданий по времени  
-    def send_message(self):
+    def send_message():
         something_updated = False
         for fic in fics.fics:
             if fic.is_updated:
