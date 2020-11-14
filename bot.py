@@ -72,10 +72,18 @@ def check_command(message):
     for fic in fics.fics:
         if fic.check_parts() != fic.stop:
             bot.send_message(chat_id=channel, text=f'Привет! Счастлива сообщить, что у фанфика {fic.name} появилось продолжение! Ты остановилась на главе {fic.stop}. Ссылка на фик: {fic.url}. Поздравляю!')
+            bot.send_message(  
+                message.chat.id,  
+                'Ответ на канале!'  
+            )
             something_updated = True
 
     if not something_updated:
         bot.send_message(chat_id=channel, text='Обновлений нет, милорд.')
+        bot.send_message(  
+                message.chat.id,  
+                'Ответ на канале!'  
+            )
 """
 @bot.message_handler(content_types='text')
 def send(message):
