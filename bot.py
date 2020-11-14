@@ -22,7 +22,7 @@ def start_process():#Запуск Process
  
     
 class P_schedule(): # Class для работы с schedule
-    def start_schedule(self): #Запуск schedule
+    def start_schedule(): #Запуск schedule
         ######Параметры для schedule######
         #schedule.every().day.at("11:02").do(P_schedule.send_message1)
         schedule.every(1).minutes.do(P_schedule.send_message)
