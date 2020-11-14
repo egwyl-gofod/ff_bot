@@ -1,42 +1,87 @@
-import requests
 import os
 import telebot
-from bs4 import BeautifulSoup
+import datetime
+import pytz
+import json
+import traceback
+import schedule
+import time
+import fics
+from functools import wraps
+from multiprocessing import *
+
 
 me = os.getenv("ME")
 token = os.getenv("TOKEN")
 channel = os.getenv("CHANNEL")
 #url = "https://api.telegram.org/bot" + token + "/"
 
+bot = telebot.TeleBot(token)
 
-class fanfic(object):
+def start_process():#Запуск Process
+    p1 = Process(target=P_schedule.start_schedule, args=()).start()
+ 
     
-    def __init__(self, name, url, stop, html):
-        self.name = name
-        self.url = url
-        self.stop = stop
-        self.html = self.get_html()
+class P_schedule(): # Class для работы с schedule
+    def start_schedule(self): #Запуск schedule
+        ######Параметры для schedule######
+        #schedule.every().day.at("11:02").do(P_schedule.send_message1)
+        schedule.every(1).minutes.do(P_schedule.send_message)
+        ##################################
+        
+        while True: #Запуск цикла
+            schedule.run_pending()
+            time.sleep(1)
+ 
+    ####Функции для выполнения заданий по времени  
+    def send_message(self):
+        something_updated = False
+        for fic in fics.fics:
+            if fic.is_updated:
+                bot.send_message(chat_id=channel, text=f'Привет! Счастлива сообщить, что у фанфика {fic.name} появилось продолжение! Ты остановилась на главе {fic.stop}. Ссылка на фик: {fic.url}. Поздравляю!')
+                something_updated = True
 
-    def get_html(self):
-        try:
-            result = requests.get(self.url)
-            result.raise_for_status()
-            return result.text
-        except(requests.RequestException, ValueError):
-            print('Server error')
-            return False
-     
-    def check_parts(self):
-        soup = BeautifulSoup(self.html, 'html.parser')
-        if "fanfics.me" in self.url:
-            li_list = soup.findAll('li', id = "chapter_")
-        elif "ficbook.net" in self.url:
-            li_list = soup.findAll('li', class_ = "part-link")
-        parts = len(li_list)
-        return parts
-    
-    def is_updated(self):
-        if self.stop != self.check_parts():
-            return True
-        return False
-    
+        if not something_updated:
+            bot.send_message(chat_id=channel, text='Обновлений нет, милорд.')
+
+
+@bot.message_handler(commands=['start'])  
+def start_command(message):  
+    bot.send_message(  
+        message.chat.id,  
+        'убирайтесь отсюда'  
+  )
+
+@bot.message_handler(commands=['help'])  
+def help_command(message):  
+    keyboard = telebot.types.InlineKeyboardMarkup()  
+    keyboard.add(  
+        telebot.types.InlineKeyboardButton(  
+            'Написать Насте', url='telegram.me/raumdemenz'  
+        )  
+    )  
+    bot.send_message(  
+        message.chat.id,  
+        'Настя, ты сделала этот бот для получения уведомлений. Ты же читаешь фанфики. \n' +
+        'Тебе уже не помочь.',  
+        reply_markup=keyboard  
+    )
+"""
+@bot.message_handler(content_types='text')
+def send(message):
+    something_updated = False
+    for fic in fics.fics:
+        if fic.is_updated:
+            bot.send_message(chat_id=channel, text=f'Привет! Счастлива сообщить, что у фанфика {fic.name} появилось продолжение! Ты остановилась на главе {fic.stop}. Ссылка на фик: {fic.url}. Поздравляю!')
+            something_updated = True
+
+    if not something_updated:
+        bot.send_message(chat_id=channel, text='Обновлений нет, милорд.')
+"""
+
+if __name__ == '__main__':
+    start_process()
+    try:
+        bot.polling(none_stop=True)
+    except:
+        pass
