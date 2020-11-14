@@ -71,7 +71,7 @@ def help_command(message):
 def check_command(message): 
     something_updated = False
     for fic in fics.fics:
-        if fic.check_parts() != fic.stop:
+        if fic.is_updated():
             bot.send_message(chat_id=channel, text=f'Привет! Счастлива сообщить, что у фанфика {fic.name} появилось продолжение! Ты остановилась на главе {fic.stop}. Ссылка на фик: {fic.url}. Поздравляю!')
             bot.send_message(  
                 message.chat.id,  
