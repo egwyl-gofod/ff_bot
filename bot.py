@@ -41,6 +41,7 @@ class P_schedule(): # Class для работы с schedule
                 something_updated = True
             elif fic.is_updated() == False and fic.check_parts() == 0:
                 bot.send_message(chat_id=channel, text='Ошибочька. Или фанфик пуст, или проблемка с сервером.')
+                something_updated = True
 
         if not something_updated:
             bot.send_message(chat_id=channel, text='Обновлений нет, милорд.')
