@@ -25,7 +25,7 @@ class P_schedule(): # Class для работы с schedule
     def start_schedule(): #Запуск schedule
         ######Параметры для schedule######
         #schedule.every().day.at("11:02").do(P_schedule.send_message1)
-        schedule.every().day.at("10:30").do(P_schedule.send_message)
+        schedule.every(12).hours.do(P_schedule.send_message)
         ##################################
         
         while True: #Запуск цикла
@@ -85,18 +85,7 @@ def check_command(message):
                 message.chat.id,  
                 'Ответ на канале!'  
             )
-"""
-@bot.message_handler(content_types='text')
-def send(message):
-    something_updated = False
-    for fic in fics.fics:
-        if fic.is_updated:
-            bot.send_message(chat_id=channel, text=f'Привет! Счастлива сообщить, что у фанфика {fic.name} появилось продолжение! Ты остановилась на главе {fic.stop}. Ссылка на фик: {fic.url}. Поздравляю!')
-            something_updated = True
 
-    if not something_updated:
-        bot.send_message(chat_id=channel, text='Обновлений нет, милорд.')
-"""
 
 if __name__ == '__main__':
     start_process()
