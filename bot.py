@@ -40,7 +40,7 @@ class P_schedule(): # Class для работы с schedule
                 bot.send_message(chat_id=channel, text=f'Привет! Счастлива сообщить, что у фанфика {fic.name} появилось продолжение! Ты остановилась на главе {fic.stop}. Ссылка на фик: {fic.url}. Поздравляю!')
                 something_updated = True
             elif fic.is_updated() == False and fic.is_empty:
-                bot.send_message(chat_id=channel, text='Ошибочька. Или фанфик пуст, или проблемка с сервером.')
+                bot.send_message(chat_id=channel, text=f'Ошибочька. Или фанфик {fic.name} пуст, или проблемка с сервером.')
                 something_updated = True
 
         if not something_updated:
@@ -83,7 +83,7 @@ def check_command(message):
             something_updated = True
 
         elif fic.is_updated() == False and fic.is_empty:
-            bot.send_message(chat_id=channel, text='Ошибочька. Или фанфик пуст, или проблемка с сервером.')
+            bot.send_message(chat_id=channel, text=f'Ошибочька. Или фанфик {fic.name} пуст, или проблемка с сервером.')
             bot.send_message(  
                 message.chat.id,  
                 'Ответ на канале!'  
