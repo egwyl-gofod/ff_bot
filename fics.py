@@ -24,7 +24,7 @@ class fanfic(object):
         if "fanfics.me" in self.url:
             li_list = soup.findAll('li', id = "chapter_")
         elif "ficbook.net" in self.url:
-            li_list = soup.findAll('li', class_ = "part-link")
+            li_list = soup.findAll('a', class_ = "part-link")
         parts = len(li_list)
         return parts
     
