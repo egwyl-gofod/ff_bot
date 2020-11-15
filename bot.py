@@ -36,13 +36,11 @@ class P_schedule(): # Class для работы с schedule
     def send_message():
         something_updated = False
         for fic in fics.fics:
-            if fic.is_updated() and fic.is_empty == False:
+            if fic.is_updated():
                 bot.send_message(chat_id=channel, text=f'Привет! Счастлива сообщить, что у фанфика {fic.name} появилось продолжение! Ты остановилась на главе {fic.stop}. Ссылка на фик: {fic.url}. Поздравляю!')
                 something_updated = True
-                print(fic.is_empty, fic.check_parts())
-            elif fic.is_updated() and fic.is_empty:
+            elif fic.is_empty:
                 bot.send_message(chat_id=channel, text='Ошибочька. Или фанфик пуст, или проблемка с сервером.')
-                print('er', fic.is_empty, fic.check_parts())
 
         if not something_updated:
             bot.send_message(chat_id=channel, text='Обновлений нет, милорд.')
