@@ -43,6 +43,6 @@ class fanfic(object):
 
 
 osen = fanfic('Осень на двоих 6', 'https://fanfics.me/fic131932', 9)
-vvp = fanfic('Вперед в прошлое', 'https://ficbook.net/readfic/1498270', 139)
+vvp = fanfic('Вперед в прошлое', 'https://ficbook.net/readfic/1498270', 140)
 fics.append(osen)
 fics.append(vvp)
